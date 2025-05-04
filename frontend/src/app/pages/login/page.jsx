@@ -2,11 +2,16 @@
 import React, { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { loginUser, signupUser } from '@/app/utils/apiClient'; 
+import {useRouter} from 'next/router';
+import { login } from '@/app/redux/userSlice';
+
 const AuthForm = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const dispatch=useDispatch();
+  const router=useRouter();
   const toggleMode = () => {
     setIsSignup(!isSignup);
     setFormData({ name: '', email: '', password: '' });
@@ -25,11 +30,14 @@ const AuthForm = () => {
       if (isSignup) {
         const data = await signupUser(formData);
         alert('Signup successful! You can now login.');
+        localStorage.setItem('HousingToken', data.token);
+        dispatch(login(data.user));
+        router.push('');
         setIsSignup(false);
       } else {
         const data = await loginUser(formData);
         localStorage.setItem('HousingToken', data.token);
-        alert('Login successful!');
+        router.push('/');
       
       }
     } catch (err) {
