@@ -29,10 +29,10 @@ const AuthForm = () => {
     try {
       if (isSignup) {
         const data = await signupUser(formData);
-        alert('Signup successful! You can now login.');
+       
         localStorage.setItem('HousingToken', data.token);
         dispatch(login(data.user));
-        router.push('');
+        router.push('/');
         setIsSignup(false);
       } else {
         const data = await loginUser(formData);
