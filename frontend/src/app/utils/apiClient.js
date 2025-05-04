@@ -1,6 +1,6 @@
 'use client';
 import axios from 'axios';
-const baseURL = 'http://localhost:3001/api';
+const baseURL ='https://house-booking-4pjy.vercel.app/api';
 
 if (!baseURL || !/^https?:\/\/.+/i.test(baseURL)) {
   console.warn(
