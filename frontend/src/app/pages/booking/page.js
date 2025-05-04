@@ -11,7 +11,7 @@ const BookingPage = () => {
   const [bookedDetails, setBookedDetails] = useState([]);
 
   useEffect(() => {
-    if (!Array.isArray(bookingHouse) || !Array.isArray(houses)) return;
+    if (!Array.isArray(bookingHouse) || !Array.isArray(houses)) return <div>error</div>;
 
     const merged = bookingHouse.map((booking) => {
       const house = houses.find((h) => h._id === booking.houseId);
