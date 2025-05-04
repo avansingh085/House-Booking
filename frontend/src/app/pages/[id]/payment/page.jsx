@@ -52,13 +52,14 @@ const [order, setOrder] = useState({});
 
           try {
             const res = await apiClient.post('/user/user/bookingHouse', paymentData);
-            if (res.success) {
+            if (res.data.success) {
               dispatch(updateUser(res.data.user)); 
-              router.push(`/`);
+              
             } else {
 
               
             }
+            router.push(`/pages/booking`);
           } catch (error) {
             console.log('Error while sending payment data:', error);
             
