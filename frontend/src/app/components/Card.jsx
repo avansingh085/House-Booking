@@ -1,10 +1,9 @@
 'use client';
 import Link from 'next/link';
 import apiClient from '../utils/apiClient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/userSlice';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 function Card({ data }) {
   const {
@@ -51,7 +50,6 @@ function Card({ data }) {
     }
   };
 
-  // Update favorite
   const updateFavorite = async (id) => {
     setIsFavoriteLoading(true);
     try {
@@ -65,22 +63,22 @@ function Card({ data }) {
   };
 
   return (
-    <div className="flex flex-row w-full max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden transition-transform hover:shadow-2xl duration-300 mb-4 sm:mb-6">
-      {/* Image Section */}
-      <div className="relative w-1/3 min-w-[120px] sm:min-w-[150px] md:min-w-[200px]" onClick={() => updatePastView(_id)}>
+    <div className="flex flex-col sm:flex-row w-full max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden transition-transform hover:shadow-2xl duration-300 mb-4 sm:mb-6">
+     
+      <div className="relative w-full sm:w-1/3 sm:min-w-[150px] md:min-w-[200px]" onClick={() => updatePastView(_id)}>
         <Link href={`/pages/${_id}`}>
           <img
             src={imageUrl[currentImageIndex] || 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'}
             alt={`${title} - Image ${currentImageIndex + 1}`}
-            className="w-full h-40 sm:h-48 md:h-64 object-cover transition-opacity duration-300"
+            className="w-full h-48 sm:h-48 md:h-64 object-cover transition-opacity duration-300"
             loading="lazy"
           />
         </Link>
-        {/* Navigation Arrows */}
+      
         {imageUrl.length > 1 && (
           <>
             <button
-              className={`absolute left-1 sm:left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition ${
+              className={`absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition ${
                 currentImageIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
               }`}
               onClick={handlePrevImage}
@@ -92,7 +90,7 @@ function Card({ data }) {
               </svg>
             </button>
             <button
-              className={`absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition ${
+              className={`absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-2 sm:p-3 rounded-full shadow-md hover:bg-gray-100 transition ${
                 currentImageIndex === imageUrl.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
               }`}
               onClick={handleNextImage}
@@ -105,9 +103,9 @@ function Card({ data }) {
             </button>
           </>
         )}
-        {/* Favorite Button */}
+       
         <button
-          className={`absolute right-1 sm:right-2 bottom-1 sm:bottom-2 ${
+          className={`absolute right-2 bottom-2 ${
             user?.favorites?.includes(_id) ? 'bg-white text-black' : 'bg-red-500 text-white'
           } px-2 sm:px-3 py-1 rounded-md shadow-md hover:bg-red-600 transition disabled:opacity-50 text-xs sm:text-sm`}
           onClick={() => updateFavorite(_id)}
@@ -118,13 +116,11 @@ function Card({ data }) {
         </button>
       </div>
 
-      {/* Content Section */}
-      <div className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 w-2/3">
-        {/* Title and Address */}
+      <div className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 w-full sm:w-2/3">
+        
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 line-clamp-1">{title}</h2>
         <p className="text-gray-600 text-xs sm:text-sm line-clamp-1">{address}</p>
 
-        {/* Price and Area Info */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
           <div>
             <h3 className="text-sm sm:text-base md:text-lg font-semibold text-blue-600">₹ {price.toLocaleString()}</h3>
@@ -140,7 +136,6 @@ function Card({ data }) {
           </div>
         </div>
 
-        {/* Property Details */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm text-gray-700">
           <p>
             <strong>Bedrooms:</strong> {numberOfBedrooms}
@@ -159,10 +154,8 @@ function Card({ data }) {
           </p>
         </div>
 
-        {/* Description */}
         <div className="text-gray-600 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">{description}</div>
 
-        {/* Action Buttons */}
         <div className="flex gap-2 sm:gap-4 mt-3 sm:mt-4">
           <button
             className="flex-1 bg-blue-600 text-white py-1 sm:py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50 text-xs sm:text-sm"
