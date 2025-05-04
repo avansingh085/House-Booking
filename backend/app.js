@@ -6,7 +6,7 @@ import HouseRoutes from './routes/HouseRoutes.js';
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
-const allowedOrigins = ["http://localhost:3000", process.env.CLIENT_URL];
+const allowedOrigins = ["http://localhost:3000", 'https://house-booking-xi.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
