@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 const BookingPage = () => {
-  const bookingHouse = useSelector((state) => state.user?.user.bookingHouse);
-  const houses = useSelector((state) => state.house?.houses);
-    const router = useRouter();
+  const bookingHouse = useSelector((state) => state.user?.user?.bookingHouse || []);
+  const houses = useSelector((state) => state.house?.houses || []);
+  const router = useRouter();
 
   const [bookedDetails, setBookedDetails] = useState([]);
 
   useEffect(() => {
-    if (!bookingHouse || !houses) return;
+    if (!Array.isArray(bookingHouse) || !Array.isArray(houses)) return;
 
     const merged = bookingHouse.map((booking) => {
       const house = houses.find((h) => h._id === booking.houseId);
@@ -23,6 +23,7 @@ const BookingPage = () => {
 
     setBookedDetails(merged);
   }, [bookingHouse, houses]);
+
   const handleBack = () => {
     try {
       router.back();
@@ -33,12 +34,18 @@ const BookingPage = () => {
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-        <button onClick={handleBack} className="flex items-center gap-2 text-white h-12 text-center rounded-2xl p-4 text-bold bg-amber-300 hover:bg-amber-500 " >Go Back</button>
+      <button
+        onClick={handleBack}
+        className="flex items-center gap-2 text-white h-12 text-center rounded-2xl p-4 font-bold bg-amber-300 hover:bg-amber-500"
+      >
+        Go Back
+      </button>
+
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-black mb-10">
           Your Bookings
         </h1>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {bookedDetails.length > 0 ? (
             bookedDetails.map((item) => (
@@ -47,7 +54,11 @@ const BookingPage = () => {
                 className="bg-white border border-black rounded-lg shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300"
               >
                 <img
-                  src={item.imageUrl?.[0] || "/default.jpg"}
+                  src={
+                    Array.isArray(item.imageUrl) && item.imageUrl.length > 0
+                      ? item.imageUrl[0]
+                      : "/default.jpg"
+                  }
                   alt={item.title}
                   className="w-full h-48 sm:h-56 object-cover"
                 />
@@ -78,7 +89,9 @@ const BookingPage = () => {
                       <strong>Status:</strong>{" "}
                       <span
                         className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
-                          item.status === 'completed' ? 'bg-black text-white' : 'bg-gray-200 text-black'
+                          item.status === 'completed'
+                            ? 'bg-black text-white'
+                            : 'bg-gray-200 text-black'
                         }`}
                       >
                         {item.status}
