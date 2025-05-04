@@ -1,24 +1,23 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 import Card from '@/app/components/Card';
 import Header from '@/app/components/header';
-import { useSelector } from 'react-redux';
 
 const HistoryPage = () => {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('pastViewed');
   const [error, setError] = useState('');
-  
+
   const user = useSelector((state) => state.user?.user);
   const houses = useSelector((state) => state.house?.houses);
-  
+
   const historyData = {
     pastViewed: houses?.filter((house) => user?.pastViews?.includes(house._id)) || [],
     favorite: houses?.filter((house) => user?.favorites?.includes(house._id)) || [],
-    pastBuy: houses?.filter((house) => user?.orderHouse?.includes(house._id)) || [],
+    housesListed: houses?.filter((house) => user?.houseListed?.includes(house._id)) || [],
   };
-  console.log(historyData, 'History Data');
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -29,8 +28,8 @@ const HistoryPage = () => {
     try {
       router.back();
     } catch (err) {
-      setError('Error navigating back. Please try again.');
       console.error('Navigation error:', err);
+      setError('Error navigating back. Please try again.');
     }
   };
 
@@ -38,9 +37,9 @@ const HistoryPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
 
-      <div className="flex-1 p-4 sm:p-6 md:p-8">
+      <main className="flex-1 p-4 sm:p-6 md:p-8">
         <div className="max-w-full sm:max-w-3xl md:max-w-4xl mx-auto">
-    
+
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <button
               onClick={handleBack}
@@ -59,13 +58,13 @@ const HistoryPage = () => {
               Back
             </button>
             <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 text-center flex-1">Property History</h1>
-            <div className="w-12 sm:w-16"></div>
+            <div className="w-12 sm:w-16" aria-hidden="true"></div>
           </div>
 
           {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
 
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 sm:mb-6 justify-center">
-            {['pastViewed', 'favorite', 'pastBuy'].map((category) => (
+            {['pastViewed', 'favorite', 'housesListed'].map((category) => (
               <button
                 key={category}
                 onClick={() => handleCategoryChange(category)}
@@ -76,15 +75,19 @@ const HistoryPage = () => {
                 }`}
                 aria-pressed={activeCategory === category}
               >
-                {category === 'pastViewed' ? 'Past Viewed' : category === 'favorite' ? 'Favorite' : 'Past Buy'}
+                {category === 'pastViewed'
+                  ? 'Past Viewed'
+                  : category === 'favorite'
+                  ? 'Favorite'
+                  : 'Houses Listed'}
               </button>
             ))}
           </div>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1">
-            {historyData[activeCategory]?.length > 0 ? (
-              historyData[activeCategory].map((data) => (
-                <Card key={data._id} data={data} />
+            {historyData[activeCategory].length > 0 ? (
+              historyData[activeCategory].map((house) => (
+                <Card key={house._id} data={house} />
               ))
             ) : (
               <p className="text-gray-600 text-sm sm:text-base text-center">
@@ -93,7 +96,7 @@ const HistoryPage = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

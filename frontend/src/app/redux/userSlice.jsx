@@ -21,6 +21,7 @@ export const fetchUser = createAsyncThunk(
 // Initial state
 const initialState = {
   user: null,
+  bookingHouse: [],
   isAuthenticated: false,
   loading: false,
   error: null,

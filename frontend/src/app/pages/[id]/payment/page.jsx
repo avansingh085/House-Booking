@@ -22,7 +22,8 @@ export default function PaymentPage() {
   const [sdkError, setSdkError] = useState(false);
 
   const houseData = useSelector((state) => state?.house?.houses || []);
-  const house = houseData?.find((house) => house._id === id);
+  const house = houseData?.find((house) => String(house._id) === String(id));
+
   const date = useSelector((state) => state?.house?.filterData?.date || '');
 
   const dispatch = useDispatch();
@@ -36,84 +37,35 @@ export default function PaymentPage() {
 
   const amount = parseInt(house?.price || 0);
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    script.onload = () => console.log('Razorpay SDK loaded successfully');
-    script.onerror = () => {
-      setSdkError(true);
-      alert('Failed to load Razorpay SDK. Please check your internet connection.');
-    };
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
+  
+const [order, setOrder] = useState({});
   const handlePayment = async () => {
-    if (sdkError || !window.Razorpay) {
-      alert('Razorpay SDK not loaded. Please try again later.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const order = await createRazorpayOrder(amount);
-      const options = {
-        key: 'YOUR_RAZORPAY_KEY_ID',
-        amount: order.amount,
-        currency: order.currency,
-        name: 'House Booking',
-        description: `Payment for ${house.title}`,
-        order_id: order.id,
-        handler: async (response) => {
-          console.log('Payment successful:', response);
+         const order= await createRazorpayOrder(amount);
           const paymentData = {
             houseId: id,
-            amount: order.amount,
+            amount: amount,
             date: date,
             orderId: order.id,
-            paymentId: response.razorpay_payment_id,
-            signature: response.razorpay_signature,
+            paymentId: order.id,
+            signature: order.id,
           };
 
-          const res = await apiClient.post('/user/user/orderHouse', paymentData);
-          if (res.success) {
-            dispatch(updateUser(res.data.user));
+          try {
+            const res = await apiClient.post('/user/user/bookingHouse', paymentData);
+            if (res.success) {
+              dispatch(updateUser(res.data.user)); 
+              router.push(`/`);
+            } else {
+
+              
+            }
+          } catch (error) {
+            console.log('Error while sending payment data:', error);
+            
           }
-
-          router.push(`/home/${id}`);
-        },
-        prefill: {
-          name: 'Customer Name',
-          email: 'customer@example.com',
-          contact: '9999999999',
-        },
-        theme: {
-          color: '#F59E0B',
-        },
-        modal: {
-          ondismiss: () => {
-            setLoading(false);
-            console.log('Payment modal closed');
-          },
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', (response) => {
-        console.error('Payment failed:', response.error);
-        alert(`Payment failed: ${response.error.description || 'Please try again.'}`);
-      });
-      rzp.open();
-    } catch (error) {
-      console.error('Payment error:', error);
-      alert('An error occurred during payment. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+        };
+       
+   
 
   if (!house) return null;
 

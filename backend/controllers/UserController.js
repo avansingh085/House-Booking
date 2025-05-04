@@ -1,16 +1,18 @@
 import User from '../models/User.js';
 import House from '../models/House.js';
-import OrderHouse from '../models/OrderHouse.js';
+import BookingHouse from '../models/BookingHouse.js';
 const UserController = {
     getUser: async (req, res) => {
         try {
             
-            const user = await User.findById(req.user.id).select('-password').populate('orderHouse');
+            const user = await User.findById(req.user.id).select('-password').populate('bookingHouse');
            
             if (!user) {
                 return res.status(404).send({ success: false, message: 'User not found' });
             }
-            return res.status(200).send({ success: true, user });
+           const bookingHouse=user.bookingHouse;
+
+            return res.status(200).send({ success: true, user,bookingHouse });
         } catch (error) {
             console.log(error)
             return res.status(500).send({ success: false, message: 'Server error', error });
@@ -21,7 +23,7 @@ const UserController = {
         console.log(id, "ID--------------");
         try {
 
-            const user = await User.findById(req.user.id).select('-password').populate('orderHouse');
+            const user = await User.findById(req.user.id).select('-password').populate('bookingHouse');
 
             if (!user) {
                 return res.status(404).send({ success: false, message: 'User not found' });
@@ -47,7 +49,7 @@ const UserController = {
         const { id } = req.body;
         try {
            
-            const user = await User.findById(req.user.id).select('-password').populate('orderHouse');
+            const user = await User.findById(req.user.id).select('-password').populate('bookingHouse');
             if (!user) {
                 return res.status(404).send({ success: false, message: 'User not found' });
             }
@@ -62,38 +64,63 @@ const UserController = {
             return res.status(500).send({ success: false, message: 'Server error', error });
         }
     },
-   
-    orderHouse: async (req, res) => {
+    updateUser:async(req, res) =>{
         try {
+            console.log("update user");
+            const { name, email, phoneNumber,profilePictureUrl} = req.body;
+            const user = await User.findById(req.user.id).select('-password').populate('bookingHouse');
+            if (!user) {
+                return res.status(404).send({ success: false, message: 'User not found' });
+            }
+            user.name =name||user.name;
+            user.email = email||user.email;
+            user.phoneNumber = phoneNumber||user.phoneNumber;
+            user.profilePictureUrl = profilePictureUrl||user.profilePictureUrl;
+
+            await user.save();
+            const updatedUser = await User.findById(user._id).select('-password').populate('bookingHouse');
+            return res.status(200).send({ success: true, message: 'User updated'});
+        }catch(error){
+            console.log(error,"updateUser")
+            return res.status(500).send({ success: false, message: 'Server error', error });
+        }
+},
+   
+    bookingHouse: async (req, res) => {
+        try {
+           
             let user = await User.findById(req.user.id);
             if (!user) {
                 return res.status(404).send({ success: false, message: 'User not found' });
             }
            
             const data = req.body;
-            const house = await House.findById(data.id);
+            const house = await House.findById(data.houseId);
             if (!house) {
                 return res.status(404).send({ success: false, message: 'House not found' });
             }
-            house.BookingDate.push(data.date);
+            house.BookingStatus.push(data.date);
             await house.save();
 
-            const newOrder = new OrderHouse({
-                houseId: data.id,
+            const newBooking = new BookingHouse({
+                houseId: data.houseId,
                 amount: data.amount,
                 date: data.date,
                 orderId: data.orderId,
-                paymentId: data.paymentId,
-                signature: data.signature,
+                paymentId: data.orderId,
+                signature: data.orderId,
             });
            
-            const savedOrder = await newOrder.save();
-           
-            user.orderHouse.push(savedOrder._id);
+            const saveBooking = await newBooking.save();
+          
+            user.bookingHouse.push(saveBooking._id);
             await user.save();
-            user = await User.findById(user._id).select('-password').populate('orderHouse');
-            return res.status(200).send({ success: true, message: 'House added to buy houses', user });
+           
+            const newUser = await User.findById(user._id).select('-password').populate('bookingHouse');
+            const bookingHouse=newUser.bookingHouse;
+            return res.status(200).send({ success: true, message: 'House added to buy houses', user:newUser,bookingHouse });
         } catch (error) {
+           
             return res.status(500).send({ success: false, message: 'Server error', error });
         }
     }

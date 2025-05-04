@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import FilterBox from './components/FilterBox';
+import FilterBox from './components/filterBox';
 import Card from './components/Card';
 import Header from './components/header';
 import Footer from './components/footer';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const App=()=>{
     const [showFilter, setShowFilter] = useState(false);
     const House=useSelector((state)=>state.house.houses)
-    console.log(House,"ppppppppppppppppppppppppp");
+    
     return(<div className="min-h-screen bg-gray-100 overflow-hidden">
      
         <Header />

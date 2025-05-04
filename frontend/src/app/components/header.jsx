@@ -33,12 +33,13 @@ function Header() {
         </div>
 
         <nav className="hidden md:flex gap-6">
-          <Link href="/" className="">Home</Link>
-          <Link href={`/pages/${isAuthenticated ? 'history' : 'login'}`} className="">History</Link>
-          <Link href={`/pages/${isAuthenticated ? 'addHouse': 'login'}`} className="">Post House</Link>
+          <Link href="/" className="font-bold text-2xl">Home</Link>
+          <Link href={`/pages/${isAuthenticated ? 'history' : 'login'}`} className="font-bold text-2xl">History</Link>
+          <Link href={`/pages/${isAuthenticated ? 'listHouse': 'login'}`} className="font-bold text-2xl">List House</Link>
+          <Link href={`/pages/${isAuthenticated ? 'booking': 'login'}`} className="font-bold text-2xl">My Booking</Link>
           {
-            isAuthenticated ? <Link href="/pages/profile" className="">profile</Link> :
-            <Link href="/pages/login" className="">Login</Link>
+            isAuthenticated ? <Link href="/pages/profile" className="font-bold text-2xl">profile</Link> :
+            <Link href="/pages/login" className="font-bold text-2xl">Login</Link>
           }
          
          
@@ -58,10 +59,19 @@ function Header() {
           </button>
         </div>
         <ul className="flex flex-col p-4 space-y-4 text-gray-800">
-          <li><Link href="/" onClick={() => setSidebarOpen(false)}>Home</Link></li>
-          <li><Link href="/pages/history" onClick={() => setSidebarOpen(false)}>Buy</Link></li>
-          <li><Link href="/pages/addHouse" onClick={() => setSidebarOpen(false)}>Rent</Link></li>
-         
+
+          <li><Link href="/" onClick={() => setSidebarOpen(false)} className="font-bold text-2xl">Home</Link></li>
+          <li><Link href={`/pages/${isAuthenticated ? 'history' : 'login'}`} onClick={() => setSidebarOpen(false)} className="font-bold text-2xl">History</Link></li>
+          <li><Link href={`/pages/${isAuthenticated ? 'listHouse': 'login'}`} onClick={() => setSidebarOpen(false)} className="font-bold text-2xl">List House</Link></li>
+            <li>
+            <Link href={`/pages/${isAuthenticated ? 'booking': 'login'}`} onClick={() => setSidebarOpen(false)} className="font-bold text-2xl">My Booking</Link>
+            </li>
+           <li>
+           {
+            isAuthenticated ? <Link href="/pages/profile" className="font-bold text-2xl" onClick={() => setSidebarOpen(false)}>profile</Link> :
+            <Link href="/pages/login" className="font-bold text-2xl" onClick={() => setSidebarOpen(false)}>Login</Link>
+          }
+           </li>
         </ul>
       </div>
 

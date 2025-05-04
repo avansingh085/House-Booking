@@ -5,17 +5,12 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-// Utility to prepare house data with fallbacks
 const getHouseData = (data = {}) => {
   const {
     _id,
     id,
     title = `Luxury House ${data.id || "Unknown"}`,
-    imageUrl = [
-      "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
-      "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
-      "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
-    ],
+    imageUrl = [],
     description = "A beautiful modern house with spacious rooms and a large backyard. Perfect for families or professionals.",
     price = "$500,000",
     location = "123 Dream Street, Cityville",
@@ -37,18 +32,15 @@ const getHouseData = (data = {}) => {
 export default function HouseDetail() {
   const { id } = useParams();
 
-  // Get house from Redux state
-  const houseData = useSelector((state) => state?.house?.houses || []);
-  const houseDetails = houseData?.find((house) => house._id === id);
+  const houseData = useSelector((state) => state?.house?.houses);
+ 
+  const houseDetails = houseData?.find((house) => String(house._id) === String(id));
 
-  // Generate consistent data structure
   const house = getHouseData(houseDetails);
   const [currentImage, setCurrentImage] = useState(0);
 
-  const images = house?.imageUrl?.length
-    ? house.imageUrl
-    : ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"];
-
+  const images = house?.imageUrl||[];
+  
   const prevImage = () => {
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   };
@@ -59,7 +51,7 @@ export default function HouseDetail() {
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-hidden">
-      {/* Header */}
+    
       <header className="bg-white shadow-md p-4 fixed w-full top-0 z-10">
         <div className="max-w-7xl mx-auto">
           <Link href="/" className="text-amber-600 hover:text-amber-700 font-semibold">
@@ -68,10 +60,9 @@ export default function HouseDetail() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto mt-10 p-4 md:p-6 pt-20">
         <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
-          {/* Image Carousel */}
+        
           <div className="relative w-full h-64 md:h-96">
             <img
               src={images[currentImage]}
@@ -79,7 +70,6 @@ export default function HouseDetail() {
               className="w-full h-full object-cover"
             />
 
-            {/* Left Arrow */}
             <button
               onClick={prevImage}
               className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 text-amber-600 hover:bg-white rounded-full p-2 shadow-md"
@@ -88,7 +78,6 @@ export default function HouseDetail() {
               &#8592;
             </button>
 
-            {/* Right Arrow */}
             <button
               onClick={nextImage}
               className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 text-amber-600 hover:bg-white rounded-full p-2 shadow-md"
@@ -98,7 +87,6 @@ export default function HouseDetail() {
             </button>
           </div>
 
-          {/* House Details */}
           <div className="p-6">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{house.title}</h1>
             <p className="text-xl md:text-2xl text-amber-600 font-semibold mb-4">{house.price}</p>

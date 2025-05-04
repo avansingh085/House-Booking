@@ -21,7 +21,7 @@ const AddHouse = () => {
     postedBy: '',
     furnishingStatus: '',
   });
-
+const [imageUrl,setImageUrl]=useState();
   const [imageFiles, setImageFiles] = useState([]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,7 +33,7 @@ const AddHouse = () => {
     if (!formData.address.trim()) newErrors.address = 'Address is required';
     if (!formData.price || formData.price <= 0) newErrors.price = 'Valid price is required';
     if (!formData.area || formData.area <= 0) newErrors.area = 'Valid area is required';
-    if (imageFiles.length === 0) newErrors.images = 'At least one image is required';
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -347,6 +347,18 @@ const AddHouse = () => {
             </div>
 
             <div>
+
+              <div className="flex">
+                <input type="text" placeholder='enter image link'  className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 " value={imageUrl} onChange={(e)=>setImageUrl(e.target.value)}/>
+                <button disabled={!imageUrl} className='h-12 w-20 bg-green-400 hover:bg-green-700 rounded-2xl m-2 ' onClick={()=>{
+                  const newImages=[...formData.imageUrl,imageUrl];
+                  setFormData({...formData,imageUrl:newImages})
+                  setImageUrl("");
+                }}>add</button>
+                 </div>
+
+
+
               <label className="block text-sm font-medium text-gray-700 mb-1">Upload Images (Multiple) *</label>
               <div className="relative">
                 <input
@@ -380,7 +392,7 @@ const AddHouse = () => {
                 </div>
               )}
             </div>
-
+      
             <button
               type="submit"
               disabled={isSubmitting}

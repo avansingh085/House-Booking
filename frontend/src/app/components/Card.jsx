@@ -26,8 +26,7 @@ function Card({ data }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
   const pricePerSqFt = area && price ? Math.round(price / area) : 0;
-   console.log(user?.favorites,"AVAN -hshshhshshsh");
-  // State for image navigation and loading
+ 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   const [isViewLoading, setIsViewLoading] = useState(false);

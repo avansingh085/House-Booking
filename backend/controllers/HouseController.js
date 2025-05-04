@@ -2,9 +2,9 @@ import express from 'express';
 import House from '../models/House.js';
 import User from '../models/User.js';
 import verifyToken from '../middleware/authMiddleware.js';
-import OrderHouse from '../models/OrderHouse.js';
+import OrderHouse from '../models/BookingHouse.js';
 const HouseController = {
-    postHouse: async (req, res) => {
+    listHouse: async (req, res) => {
         
         try {
             const newHouse = new House(req.body);
@@ -13,7 +13,7 @@ const HouseController = {
             if (!user) {
                 return res.status(404).json({ success: false, message: 'User not found' });
             }
-            user.housesPosted.push(newHouse._id);
+            user.houseListed.push(newHouse._id);
             await user.save();
 
             return res.status(201).json({ success: true, message: 'House posted successfully', house: newHouse });

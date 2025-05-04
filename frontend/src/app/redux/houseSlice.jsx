@@ -34,10 +34,10 @@ const houseSlice = createSlice({
       state.filterData = filterData;
     
       state.houses = state.mainDataHouse.filter((house) => {
-        console.log(house.BookingDate, "BOOKING DATE");
+       
     
         if (filterData.date) {
-          const dates = Array.isArray(house.BookingDate) ? house.BookingDate : [];
+          const dates = Array.isArray(house.BookingStatus) ? house.BookingStatus : [];
           return !dates.some((date) => {
             console.log(date, "DATE");
             return filterData.date === date;

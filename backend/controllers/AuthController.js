@@ -32,7 +32,7 @@ const AuthController = {
     login: async (req, res) => {
         const { email, password } = req.body;
         try {
-            const user = await User.findOne({ email }).populate('orderHouse');
+            const user = await User.findOne({ email }).populate('bookingHouse');
             if (!user) {
                 return res.status(401).json({ message: 'Invalid email or password' });
             }
@@ -45,6 +45,7 @@ const AuthController = {
            return res.status(200).send({ success:true,user, token });
         }
         catch (error) {
+            console.log(error)
            return res.status(500).json({success:true, message: 'Server error', error });
         }
     },
