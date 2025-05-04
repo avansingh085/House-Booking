@@ -6,9 +6,17 @@ import HouseRoutes from './routes/HouseRoutes.js';
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
+const allowedOrigins = ["http://localhost:3000", process.env.CLIENT_URL];
+
 app.use(cors({
-  origin: '*',
-  credentials: true, 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
