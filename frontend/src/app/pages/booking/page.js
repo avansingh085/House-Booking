@@ -4,16 +4,17 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 const BookingPage = () => {
-  const bookingHouse = useSelector((state) => state.user?.user?.bookingHouse || []);
+  const user = useSelector((state) => state.user.user );
+  
   const houses = useSelector((state) => state.house?.houses || []);
   const router = useRouter();
 
   const [bookedDetails, setBookedDetails] = useState([]);
 
   useEffect(() => {
-    if (!Array.isArray(bookingHouse) || !Array.isArray(houses)) return <div>error</div>;
+    if (!Array.isArray(user?.bookingHouse) || !Array.isArray(houses)) return <div>error</div>;
 
-    const merged = bookingHouse.map((booking) => {
+    const merged = user?.bookingHouse?.map((booking) => {
       const house = houses.find((h) => h._id === booking.houseId);
       if (house) {
         return { ...house, ...booking };
@@ -22,7 +23,7 @@ const BookingPage = () => {
     }).filter(Boolean);
 
     setBookedDetails(merged);
-  }, [bookingHouse, houses]);
+  }, [user, houses]);
 
   const handleBack = () => {
     try {
@@ -103,7 +104,9 @@ const BookingPage = () => {
             ))
           ) : (
             <div className="col-span-full text-center text-black text-lg font-medium bg-gray-100 py-10 rounded-lg">
-              No bookings found.
+             {
+              !user ? ' Loading...': 'No bookings found.'
+             } 
             </div>
           )}
         </div>
