@@ -4,7 +4,7 @@ const ViewContact = ({ isOpen, onClose, contact }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed  z-50 flex items-center justify-center bg-amber-200 bg-opacity-50">
+    <div className="  z-50  absolute  flex items-center justify-center bg-amber-200 bg-opacity-50">
       <div className="bg-amber-200 rounded-2xl shadow-lg p-6 w-11/12 max-w-sm relative">
         <button
           onClick={onClose}
