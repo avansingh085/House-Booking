@@ -83,14 +83,14 @@ function Card({ data }) {
     <div className="flex flex-col sm:flex-row w-full max-w-5xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden transition-transform hover:shadow-2xl duration-300 mb-4 sm:mb-6">
      
       <div className="relative w-full sm:w-1/3 sm:min-w-[150px] md:min-w-[200px]" onClick={() => updatePastView(_id)}>
-        <NavLink href={`pages/${_id}`}>
+        <Link href={`/pages/${_id}`}>
           <img
             src={imageUrl[currentImageIndex] || 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg'}
             alt={`${title} - Image ${currentImageIndex + 1}`}
             className="w-full h-48 sm:h-48 md:h-64 object-cover transition-opacity duration-300"
             loading="lazy"
           />
-        </NavLink>
+        </Link>
       
         {imageUrl.length > 1 && (
           <>
