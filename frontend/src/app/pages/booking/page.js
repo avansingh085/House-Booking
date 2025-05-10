@@ -36,7 +36,7 @@ const BookingPage = () => {
   };
 
   return (
-    <div className="">
+    <div className="min-h-screen w-screen">
     
      <Header/>
       <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
