@@ -31,9 +31,16 @@ const getHouseData = (data = {}) => {
 export default function HouseDetail() {
   const { id } = useParams();
 
-  const houseData = useSelector((state) => state?.house?.houses);
- 
+  const houseData = useSelector((state) => state?.house?.houses||null);
+ if(!houseData)
+ {
+  return <div>Loading...</div>
+ }
   const houseDetails = houseData?.find((house) => String(house._id) === String(id));
+  if(!houseDetails)
+  {
+    return <div>house detail not found</div>
+  }
 console.log(houseDetails,id)
   const house = getHouseData(houseDetails);
   const [currentImage, setCurrentImage] = useState(0);
