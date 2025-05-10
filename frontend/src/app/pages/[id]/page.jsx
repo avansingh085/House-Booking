@@ -49,9 +49,9 @@ export default function HouseDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 overflow-hidden">
+    <div className="mi-h-screen w-screen">
        <Header/>
-
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
       <main className="max-w-7xl mx-auto mt-10 p-4 md:p-6 pt-20">
         <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
         
@@ -109,7 +109,9 @@ export default function HouseDetail() {
           </div>
         </div>
       </main>
-      <Footer/>
+      
+    </div>
+    <Footer/>
     </div>
   );
 }

@@ -45,7 +45,7 @@ function Card({ data }) {
     }
     getContactInfo();
    
-  },[user])
+  },[]);
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
