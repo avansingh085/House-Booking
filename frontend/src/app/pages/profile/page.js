@@ -46,7 +46,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen ">
       <Header />
       <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
         <button

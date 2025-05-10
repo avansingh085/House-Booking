@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { loginUser, signupUser } from '@/app/utils/apiClient';
 import { login } from '@/app/redux/userSlice';
 import Footer from '@/app/components/footer';
+import Header from '@/app/components/header';
+
 
 const AuthForm = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -65,7 +67,7 @@ const AuthForm = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen w-screen ">
       <Header/>
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
