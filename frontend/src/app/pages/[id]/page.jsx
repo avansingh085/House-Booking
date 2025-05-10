@@ -1,5 +1,4 @@
 'use client';
-
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -9,8 +8,7 @@ import Footer from '@/app/components/footer';
 const getHouseData = (data = {}) => {
   const {
     _id,
-    id,
-    title = `Luxury House ${data.id || "Unknown"}`,
+    title = `Luxury House `,
     imageUrl = [],
     description = "A beautiful modern house with spacious rooms and a large backyard. Perfect for families or professionals.",
     price = "$500,000",
@@ -20,7 +18,7 @@ const getHouseData = (data = {}) => {
 
   return {
     _id,
-    id,
+    
     title,
     imageUrl,
     description,
