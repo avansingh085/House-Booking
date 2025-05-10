@@ -4,7 +4,7 @@ import apiClient from '../utils/apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/userSlice';
 import { useState } from 'react';
-
+import ViewContact from './ViewContact';
 function Card({ data }) {
   const {
     _id,
@@ -29,7 +29,12 @@ function Card({ data }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   const [isViewLoading, setIsViewLoading] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [contact, setContact] = useState({
+    name: 'Avan Singh',
+    email: 'avan@example.com',
+    mobile: '+91 9876543210'
+  });
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
@@ -157,19 +162,17 @@ function Card({ data }) {
         <div className="text-gray-600 text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">{description}</div>
 
         <div className="flex gap-2 sm:gap-4 mt-3 sm:mt-4">
-          <button
-            className="flex-1 bg-blue-600 text-white py-1 sm:py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50 text-xs sm:text-sm"
-            disabled={isViewLoading}
-            aria-label="View Contact Details"
-          >
-            {isViewLoading ? 'Loading...' : 'View Contact'}
-          </button>
-          <button
-            className="flex-1 border border-blue-600 text-blue-600 py-1 sm:py-2 rounded-md hover:bg-blue-50 transition text-xs sm:text-sm"
-            aria-label="Contact Property Owner"
-          >
-            Contact
-          </button>
+          <div>
+           <button
+        onClick={() => setIsOpen(true)}
+        className="px-4 py-2 bg-blue-600 text-white rounded-md"
+      >
+        View Contact
+      </button>
+
+      <ViewContact isOpen={isOpen} onClose={() => setIsOpen(false)} contact={contact} />
+        </div >
+         
         </div>
       </div>
     </div>

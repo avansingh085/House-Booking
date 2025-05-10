@@ -1,13 +1,13 @@
 'use client';
-import App from './app.js'
-// import {login} from './redux/userSlice'
+ import App from './app';
 export default function Home() {
  
    
  
   return (
-    
+    <>
     <App/>
+    </>
    
   );
 }
