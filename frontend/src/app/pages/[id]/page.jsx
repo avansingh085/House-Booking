@@ -34,7 +34,7 @@ export default function HouseDetail() {
   const houseData = useSelector((state) => state?.house?.houses);
  
   const houseDetails = houseData?.find((house) => String(house._id) === String(id));
-
+console.log(houseDetails,id)
   const house = getHouseData(houseDetails);
   const [currentImage, setCurrentImage] = useState(0);
 
