@@ -29,9 +29,10 @@ const getHouseData = (data = {}) => {
 };
 
 export default function HouseDetail() {
+  return <div>Hellow</div>
   const { id } = useParams();
 
-  const houseData = useSelector((state) => state?.house?.houses||null);
+  const houseData = useSelector((state) => state?.house?.houses);
  if(!houseData)
  {
   return <div>Loading...</div>
