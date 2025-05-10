@@ -3,7 +3,7 @@ import Link from 'next/link';
 import apiClient from '../utils/apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/userSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ViewContact from './ViewContact';
 function Card({ data }) {
   const {
@@ -30,11 +30,14 @@ function Card({ data }) {
   const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
   const [isViewLoading, setIsViewLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [contact, setContact] = useState({
-    name: 'Avan Singh',
-    email: 'avan@example.com',
-    mobile: '+91 9876543210'
-  });
+  const [contact, setContact] = useState();
+  useEffect(()=>{
+    setContact({
+    name:user?.name|| 'N/A',
+    email: user?.email||'N/A',
+    mobile:user?.phoneNumber|| 'N/A'
+  })
+  },[user])
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
