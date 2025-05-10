@@ -34,7 +34,7 @@ function Card({ data }) {
   const [contact, setContact] = useState();
   useEffect(()=>{
     const getContactInfo=async ()=>{
-       let contactIfo=await axios.get(`/house/contactInfo?id=${_id}`).data;
+       let contactIfo=await apiClient.get(`/house/contactInfo?id=${_id}`).data;
         setContact({
     name:contactIfo?.name|| 'N/A',
     email:contactIfo?.email||'N/A',
