@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/userSlice';
 import { useEffect, useState } from 'react';
 import ViewContact from './ViewContact';
+import axios from 'axios';
 function Card({ data }) {
   const {
     _id,
@@ -32,11 +33,17 @@ function Card({ data }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contact, setContact] = useState();
   useEffect(()=>{
-    setContact({
-    name:user?.name|| 'N/A',
-    email: user?.email||'N/A',
-    mobile:user?.phoneNumber|| 'N/A'
+    const getContactInfo=async ()=>{
+       let contactIfo=await axios.get(`/house/contactInfo?id=${_id}`).data;
+        setContact({
+    name:contactIfo?.name|| 'N/A',
+    email:contactIfo?.email||'N/A',
+    mobile:contactIfo?.phoneNumber|| 'N/A'
   })
+
+    }
+    getContactInfo();
+   
   },[user])
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : prev));

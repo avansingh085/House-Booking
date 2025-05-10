@@ -49,6 +49,17 @@ const HouseController = {
             return res.status(500).send({ success: false, message: 'Server error', error });
         }
     },
+    getContactInfo:async (req,res)=>{
+        let id=req.query.id;
+        try{
+           const user = await User.findOne({ houseListed: { $in: [id] } });
+           return res.status(200).send({success:true,name:user.name,email:user.email,phoneNumber:user.phoneNumber});
+        }
+        catch(err)
+        {
+          return res.status(500).send({success:false,message:"server error or id not valid"})
+        }
+    }
     
   
 }
