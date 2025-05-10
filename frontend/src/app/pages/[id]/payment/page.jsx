@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import apiClient from '@/app/utils/apiClient';
 import { updateUser } from '@/app/redux/userSlice';
-
+import { fetchUser } from '@/app/redux/userSlice';
 const createRazorpayOrder = async (amount) => {
   return {
     id: `order_${Math.random().toString(36).substr(2, 9)}`,
@@ -53,7 +53,7 @@ const [order, setOrder] = useState({});
           try {
             const res = await apiClient.post('/user/user/bookingHouse', paymentData);
             if (res.data.success) {
-              dispatch(updateUser(res.data.user)); 
+              dispatch(fetchUser()); 
               
             } else {
 

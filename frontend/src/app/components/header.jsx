@@ -7,7 +7,8 @@ import { fetchHouses } from "../redux/houseSlice";
 
 function Header() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state?.user.isAuthenticated);
+ 
   const dispatch = useDispatch();
 
   useEffect(() => {
