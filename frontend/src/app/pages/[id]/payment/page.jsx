@@ -73,7 +73,7 @@ const [order, setOrder] = useState({});
   if (!house) return null;
 
   return (
-    <div>
+    <div className="min-h-screen w-full ">
       <Header/>
    
     <div className="min-h-screen mt-10 bg-gray-100 overflow-hidden">

@@ -35,7 +35,7 @@ const HistoryPage = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen w-full">
       <Header/>
     <div className="min-h-screen bg-gray-100 flex flex-col">
       
