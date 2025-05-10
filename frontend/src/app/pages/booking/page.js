@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
 
 const BookingPage = () => {
   const user = useSelector((state) => state.user.user );
@@ -34,14 +36,10 @@ const BookingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-      <button
-        onClick={handleBack}
-        className="flex items-center gap-2 text-white h-12 text-center rounded-2xl p-4 font-bold bg-amber-300 hover:bg-amber-500"
-      >
-        Go Back
-      </button>
-
+    <div className="">
+    
+     <Header/>
+      <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-black mb-10">
           Your Bookings
@@ -111,6 +109,9 @@ const BookingPage = () => {
           )}
         </div>
       </div>
+      </div>
+      <Footer/>
+      
     </div>
   );
 };

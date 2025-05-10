@@ -6,6 +6,7 @@ import { updateUser } from '@/app/redux/userSlice';
 import { useRouter } from 'next/navigation';
 import apiClient from '@/app/utils/apiClient';
 import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
 
 export default function ProfilePage() {
   const user = useSelector((state) => state.user?.user);
@@ -135,6 +136,7 @@ export default function ProfilePage() {
           </form>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

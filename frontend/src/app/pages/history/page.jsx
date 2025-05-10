@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import Card from '@/app/components/Card';
 import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
 
 const HistoryPage = () => {
   const router = useRouter();
@@ -34,8 +35,10 @@ const HistoryPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Header />
+      
 
       <main className="flex-1 p-4 sm:p-6 md:p-8">
         <div className="max-w-full sm:max-w-3xl md:max-w-4xl mx-auto">
@@ -97,6 +100,8 @@ const HistoryPage = () => {
           </div>
         </div>
       </main>
+    </div>
+    <Footer/>
     </div>
   );
 };

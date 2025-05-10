@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation'; 
 import { loginUser, signupUser } from '@/app/utils/apiClient';
 import { login } from '@/app/redux/userSlice';
+import Footer from '@/app/components/footer';
 
 const AuthForm = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -64,6 +65,8 @@ const AuthForm = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">
@@ -176,6 +179,8 @@ const AuthForm = () => {
           </button>
         </p>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

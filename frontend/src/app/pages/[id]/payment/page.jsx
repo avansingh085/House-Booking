@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import apiClient from '@/app/utils/apiClient';
 import { updateUser } from '@/app/redux/userSlice';
 import { fetchUser } from '@/app/redux/userSlice';
+import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
 const createRazorpayOrder = async (amount) => {
   return {
     id: `order_${Math.random().toString(36).substr(2, 9)}`,
@@ -71,19 +73,11 @@ const [order, setOrder] = useState({});
   if (!house) return null;
 
   return (
+    <div>
+      <Header/>
+   
     <div className="min-h-screen mt-10 bg-gray-100 overflow-hidden">
-      <header className="bg-white shadow-md p-4 fixed w-full top-0 z-10">
-        <div className="max-w-7xl mx-auto">
-          <Link
-            href={`/pages/${id}`}
-            className="text-amber-600 hover:text-amber-700 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-600 rounded"
-            aria-label="Back to house details"
-          >
-            ← Back to House Details
-          </Link>
-        </div>
-      </header>
-
+      
       <main className="max-w-7xl mx-auto p-4 md:p-6 pt-20 flex justify-center">
         <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-md p-6">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
@@ -118,6 +112,8 @@ const [order, setOrder] = useState({});
           </div>
         </div>
       </main>
+    </div>
+    <Footer/>
     </div>
   );
 }

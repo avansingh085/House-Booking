@@ -4,7 +4,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
 const getHouseData = (data = {}) => {
   const {
     _id,
@@ -51,14 +52,7 @@ export default function HouseDetail() {
 
   return (
     <div className="min-h-screen bg-gray-100 overflow-hidden">
-    
-      <header className="bg-white shadow-md p-4 fixed w-full top-0 z-10">
-        <div className="max-w-7xl mx-auto">
-          <Link href="/" className="text-amber-600 hover:text-amber-700 font-semibold">
-            ← Back to Listings
-          </Link>
-        </div>
-      </header>
+       <Header/>
 
       <main className="max-w-7xl mx-auto mt-10 p-4 md:p-6 pt-20">
         <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
@@ -119,6 +113,7 @@ export default function HouseDetail() {
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }
