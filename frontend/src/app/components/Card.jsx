@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../redux/userSlice';
 import { useEffect, useState } from 'react';
 import ViewContact from './ViewContact';
-import axios from 'axios';
 function Card({ data }) {
   const {
     _id,
@@ -34,11 +33,13 @@ function Card({ data }) {
   const [contact, setContact] = useState();
   useEffect(()=>{
     const getContactInfo=async ()=>{
-       let contactIfo=await apiClient.get(`/house/contactInfo?id=${_id}`).data;
+       let res=await apiClient.get(`/house/contactInfo?id=${_id}`);
+       let contactInfo=res.data;
+      
         setContact({
-    name:contactIfo?.name|| 'N/A',
-    email:contactIfo?.email||'N/A',
-    mobile:contactIfo?.phoneNumber|| 'N/A'
+    name:contactInfo?.name|| 'N/A',
+    email:contactInfo?.email||'N/A',
+    mobile:contactInfo?.phoneNumber|| 'N/A'
   })
 
     }

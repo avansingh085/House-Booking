@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
-const baseURL ='https://house-booking-2.onrender.com/api';
-
+// const baseURL ='https://house-booking-2.onrender.com/api';
+const baseURL='http://localhost:3001/api';
 if (!baseURL || !/^https?:\/\/.+/i.test(baseURL)) {
   console.warn(
     `Invalid or missing NEXT_PUBLIC_API_URL. Using fallback: ${baseURL}. Ensure environment variable is set in production.`

@@ -53,6 +53,7 @@ const HouseController = {
         let id=req.query.id;
         try{
            const user = await User.findOne({ houseListed: { $in: [id] } });
+           console.log(user.name,user.email);
            return res.status(200).send({success:true,name:user.name,email:user.email,phoneNumber:user.phoneNumber});
         }
         catch(err)
