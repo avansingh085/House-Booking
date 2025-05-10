@@ -100,9 +100,7 @@ export default function HouseDetail() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition">
-                Contact Agent
-              </button>
+             
               <Link
                 href={`/pages/${id}/payment`}
                 className="bg-amber-600 text-white px-6 py-3 rounded-full hover:bg-amber-700 transition text-center"
