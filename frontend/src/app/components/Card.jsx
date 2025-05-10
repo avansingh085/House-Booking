@@ -58,6 +58,7 @@ function Card({ data }) {
     setIsViewLoading(true);
     try {
       const res = await apiClient.post('/user/user/addPastView', { id });
+      if(res.data.success)
       dispatch(updateUser(res.data.user));
     } catch (error) {
       console.log('Error updating past view:', error);
